@@ -1,5 +1,5 @@
 {
-  description = "py-easy-cmake";
+  description = "diagrams-builder nix flake";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
@@ -31,13 +31,9 @@
       let pkgs = nixpkgs.legacyPackages.${system};
       in rec {
         packages.diagrams-builder = mkApp pkgs { };
-        defaultPackage = packages.diagrams-builder;
-        devShell = mkApp pkgs { returnShellEnv = true; };
-        # devShell = pkgs.mkShell {
-        #   buildInputs = [ pkgs.python3 pkgs.poetry ];
-        #   inputsFrom = [ defaultPackage ];
-        # };
+        packages.default = packages.diagrams-builder;
+        devShells.default = mkApp pkgs { returnShellEnv = true; };
       }) // {
-        overlay = final: prev: { diagrams-builder = mkApp final { }; };
+        overlays.default = final: prev: { diagrams-builder = mkApp final { }; };
       };
 }
