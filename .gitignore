@@ -15,3 +15,4 @@ TAGS
 cabal.sandbox.config
 .stack-work
 /result
+.diagrams_cache
